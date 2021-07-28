@@ -30,7 +30,7 @@ image nn_resize(image im, int w, int h)
 {
     image result = make_image(w, h, im.c);
 
-    float ratio_w, ratio_h;
+    float ratio_w, ratio_h, nnX, nnY;
 
     if (im.w <= w)
         ratio_w = (float)im.w / w;
@@ -46,15 +46,20 @@ image nn_resize(image im, int w, int h)
         for (int j = 0; j < result.h; j++)
             for (int i = 0; i < result.w; i++)
             {
-                float nnX = floorf(i * ratio_w);
-                float nnY = floorf(j * ratio_h);
+                nnX = floorf(i * ratio_w);
+                nnY = floorf(j * ratio_h);
 
                 result.data[j * result.w + i + result.w * result.h * k] = nn_interpolate(im, nnX, nnY, k);
             }
 
     //save_png(result, "results/nn_resize_result");
+
     return result;
 }
+
+// ========================================
+//      Bilinear Interpolate Formula
+// ========================================
 
 // z00 is the function value at (0,0), the lower left corner
 // z10 is the function value at (1,0), the lower right corner
@@ -125,5 +130,6 @@ image bilinear_resize(image im, int w, int h)
             }
 
     //save_png(result, "results/bilinear_resize_result");
+
     return result;
 }

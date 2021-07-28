@@ -49,7 +49,10 @@ image convolve_image(image im, image filter, int preserve)
     }
 
     // get values from filter
-    int centerW = filter.w / 2, centerH = filter.h / 2;
+    int centerW, centerH;
+
+    centerW = filter.w / 2;
+    centerH = filter.h / 2;
 
     for (int z = 0; z < result.c; ++z)
         for (int j = 0; j < result.h; ++j)

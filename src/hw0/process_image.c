@@ -55,74 +55,85 @@ void set_pixel(image im, int x, int y, int c, float v)
 image copy_image(image im)
 {
     image copy = make_image(im.w, im.h, im.c);
+
+    int idx;
+
     for (int k = 0; k < im.c; ++k)
-    {
         for (int j = 0; j < im.h; ++j)
         {
             for (int i = 0; i < im.w; ++i)
             {
-                int idx = j * im.w + i + im.w * im.h * k;
+                idx = j * im.w + i + im.w * im.h * k;
                 copy.data[idx] = im.data[idx];
             }
         }
-    }
+
     // save_image(copy, "results/copy_image_result");
+
     return copy;
 }
 
 image rgb_to_grayscale(image im)
 {
     assert(im.c == 3);
+
     image gray = make_image(im.w, im.h, 1);
+
+    int gray_idx, color_idx_r, color_idx_g, color_idx_b;
+
     for (int j = 0; j < im.h; ++j)
-    {
         for (int i = 0; i < im.w; ++i)
         {
-            int gray_idx = j * im.w + i;
+            gray_idx = j * im.w + i;
 
-            int color_idx_r = j * im.w + i + im.w * im.h * 0;
-            int color_idx_g = j * im.w + i + im.w * im.h * 1;
-            int color_idx_b = j * im.w + i + im.w * im.h * 2;
+            color_idx_r = j * im.w + i + im.w * im.h * 0;
+            color_idx_g = j * im.w + i + im.w * im.h * 1;
+            color_idx_b = j * im.w + i + im.w * im.h * 2;
 
             gray.data[gray_idx] = 0.299 * im.data[color_idx_r] + 0.587 * im.data[color_idx_g] + 0.114 * im.data[color_idx_b];
         }
-    }
+
     // save_image(gray, "results/rgb_to_grayscale_result");
+
     return gray;
 }
 
 void shift_image(image im, int c, float v)
 {
     assert(im.c == 3);
+
+    int color_idx;
+
     for (int j = 0; j < im.h; ++j)
-    {
         for (int i = 0; i < im.w; ++i)
         {
-            int color_idx = j * im.w + i + im.w * im.h * c;
+            color_idx = j * im.w + i + im.w * im.h * c;
 
             im.data[color_idx] = im.data[color_idx] + v;
         }
-    }
+
     // save_image(im, "results/shift_image_result");
 }
 
 void clamp_image(image im)
 {
     assert(im.c == 3);
+
+    int idx;
+
     for (int k = 0; k < im.c; ++k)
-    {
         for (int j = 0; j < im.h; ++j)
         {
             for (int i = 0; i < im.w; ++i)
             {
-                int idx = j * im.w + i + im.w * im.h * k;
+                idx = j * im.w + i + im.w * im.h * k;
+
                 if (im.data[idx] > 1)
                     im.data[idx] = 1;
                 else if (im.data[idx] < 0)
                     im.data[idx] = 0;
             }
         }
-    }
 }
 
 // These might be handy
@@ -210,7 +221,8 @@ void rgb_to_hsv(image im)
             im.data[color_idx_3rd] = V;
         }
     }
-    save_png(im, "results/rgb_to_hsv_result");
+
+    // save_png(im, "results/rgb_to_hsv_result");
 }
 
 void hsv_to_rgb(image im)
@@ -251,8 +263,8 @@ void hsv_to_rgb(image im)
 
             if (C != 0)
             {
-                m = V - C; // min(R,G,B)
-                // V: max(R,G,B)
+                m = V - C; // m: min(R,G,B), V: max(R,G,B)
+
                 _H = H * 6;
 
                 if (_H > 0 && _H <= 1)
@@ -299,5 +311,6 @@ void hsv_to_rgb(image im)
             im.data[color_idx_3rd] = B;
         }
     }
-    save_png(im, "results/hsv_to_rgb_result");
+
+    //save_png(im, "results/hsv_to_rgb_result");
 }
