@@ -26,7 +26,7 @@ image make_box_filter(int w)
     // fill in 1
     for (int i = 0; i < w; ++i)
         for (int j = 0; j < w; ++j)
-            result.data[i * w + j] = 1;
+            result.data[i * w + j] = 1.0f;
 
     // normalize
     l1_normalize(result);
@@ -49,7 +49,7 @@ image convolve_image(image im, image filter, int preserve)
     }
 
     // get values from filter
-    int centerW, centerH;
+    int centerW, centerH, idxW, idxH;
 
     centerW = filter.w / 2;
     centerH = filter.h / 2;
@@ -70,8 +70,8 @@ image convolve_image(image im, image filter, int preserve)
                             else
                                 valueOfImg = im.data[(j + g) * im.w + (i + h) + (im.h * im.w * z)];
 
-                            int idxW = h + centerW;
-                            int idxH = g + centerH;
+                            idxW = h + centerW;
+                            idxH = g + centerH;
 
                             sum += filter.data[idxH * filter.w + idxW] * valueOfImg;
                         }
@@ -96,7 +96,7 @@ image make_highpass_filter()
     kernel.data[6] = 0.0f;  kernel.data[7] = -1.0f; kernel.data[8] = 0.0f;
 
     // normalize
-    //l1_normalize(kernel);
+    l1_normalize(kernel);
 
     return kernel;
 }
@@ -110,7 +110,7 @@ image make_sharpen_filter()
     kernel.data[6] = 0.0f;  kernel.data[7] = -1.0f; kernel.data[8] = 0.0f;
 
     // normalize
-    //l1_normalize(kernel);
+    l1_normalize(kernel);
 
     return kernel;
 }
@@ -124,7 +124,7 @@ image make_emboss_filter()
     kernel.data[6] = 0.0f;  kernel.data[7] = 1.0f;  kernel.data[8] = 2.0f;
 
     // normalize
-    //l1_normalize(kernel);
+    l1_normalize(kernel);
 
     return kernel;
 }

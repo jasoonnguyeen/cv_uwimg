@@ -37,10 +37,16 @@ Once you are done, test out your convolution by filtering our image! We need to 
     f = make_box_filter(7)
     blur = convolve_image(im, f, 1)
     save_image(blur, "dog-box7")
+    
 
 We'll get some output that looks like this:
 
 ![covolution](../../figs/dog-box7.png)
+
+
+Grounth Truth                   |  Experiments
+:-------------------------:|:-------------------------:
+![](../../figs/dog-box7.png)   | ![](../../results/dog-box7.jpg)
 
 Now we can use this to perform our thumbnail operation:
 
@@ -66,6 +72,18 @@ Fill in the functions `image make_highpass_filter()`, `image make_sharpen_filter
 Highpass                   |  Sharpen                  | Emboss
 :-------------------------:|:-------------------------:|:--------------------|
 ![](../../figs/highpass.png)     | ![](../../figs/sharpen.png)     | ![](../../figs/emboss.png)
+
+#### 2.2.1 Grounth Truth  
+
+Highpass                   |  Sharpen                  | Emboss
+:-------------------------:|:-------------------------:|:--------------------|
+![](../../figs/dog-highpass.png)     | ![](../../figs/dog-sharpen.png)     | ![](../../figs/dog-emboss.png)
+
+#### 2.2.2 Experiments
+
+Highpass                   |  Sharpen                  | Emboss
+:-------------------------:|:-------------------------:|:--------------------|
+![](../../results/dog-highpass.jpg)     | ![](../../results/dog-sharpen.jpg)     | ![](../../results/dog-emboss.jpg)
 
 ### 2.3 Implement a Gaussian kernel ###
 
