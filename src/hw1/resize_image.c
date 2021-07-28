@@ -23,10 +23,7 @@ float nn_interpolate(image im, float x, float y, int c)
     if (l > im.w)   l = im.w - 1;
     if (k > im.h)   k = im.h - 1;
 
-    if (l < im.w && k < im.h)
-        return im.data[k * im.w + l + channel_step];
-    else
-        return 0;
+    return im.data[k * im.w + l + channel_step];
 }
 
 image nn_resize(image im, int w, int h)
@@ -55,7 +52,7 @@ image nn_resize(image im, int w, int h)
                 result.data[j * result.w + i + result.w * result.h * k] = nn_interpolate(im, nnX, nnY, k);
             }
 
-    save_png(result, "results/nn_resize_result");
+    //save_png(result, "results/nn_resize_result");
     return result;
 }
 
@@ -127,7 +124,6 @@ image bilinear_resize(image im, int w, int h)
                 result.data[j * result.w + i + result.w * result.h * k] = bilinear_interpolate(im, nnX, nnY, k);
             }
 
-    save_png(result, "results/bilinear_resize_result");
-
+    //save_png(result, "results/bilinear_resize_result");
     return result;
 }
